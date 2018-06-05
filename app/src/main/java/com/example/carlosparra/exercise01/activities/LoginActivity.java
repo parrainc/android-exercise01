@@ -38,14 +38,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void Login(String email, String password) {
-        if (email != "carlos@unapec.edu.do" && password != "strongpass") {
+        if (email == "carlos@unapec.edu.do" && password == "strongpass") {
             User user = new User();
 
             Intent intent = new Intent(this, ProfileActivity.class);
             intent.putExtra("user_data", user);
             startActivity(intent);
+        }else {
+            Toast.makeText(this, "Email/Password cannot be empty or invalid", Toast.LENGTH_SHORT).show();
         }
-
-        Toast.makeText(this, "Email/Password cannot be empty or invalid", Toast.LENGTH_SHORT);
     }
 }

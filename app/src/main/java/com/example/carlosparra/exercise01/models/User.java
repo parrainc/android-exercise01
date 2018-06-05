@@ -18,7 +18,7 @@ public class User implements Serializable {
         this.attributes = new HashMap<>();
         this.attributes.put("Repositories", 125);
         this.attributes.put("Collaborations", 29);
-        this.attributes.put("Starts", 755);
+        this.attributes.put("Stars", 755);
     }
 
 }
