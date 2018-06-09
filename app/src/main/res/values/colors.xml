@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorSecondaryAccent">#03A9F4</color>
+    <color name="colorPrimaryLight">#C5CAE9</color>
+    <color name="colorProfileBg">#eeeeee</color>
+    <color name="colorFontsDefault">#000000</color>
+    <color name="grayed_out">#757575</color>
+    <color name="colorDivider">#bdbdbd</color>
+    <color name="colorButtonShadow">#8c8c8c</color>
 </resources>

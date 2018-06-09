@@ -4,4 +4,7 @@
     <string name="password">Password</string>
     <string name="email_placeholder">name@domain.com</string>
     <string name="image_view_content_description">Logo</string>
+    <string name="share_profile">Share Profile</string>
+    <string name="profile_title">Profile</string>
+    <string name="intent_share_title">Share...</string>
 </resources>

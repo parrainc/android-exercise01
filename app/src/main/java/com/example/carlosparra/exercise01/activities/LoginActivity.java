@@ -13,7 +13,7 @@ import com.example.carlosparra.exercise01.models.User;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private AppCompatButton buttonLogin;
+    AppCompatButton buttonLogin;
     private EditText editTextEmail;
     private EditText editTextPassword;
 
@@ -38,14 +38,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void Login(String email, String password) {
-        if (email == "carlos@unapec.edu.do" && password == "strongpass") {
+        if (email.equals("carlos@unapec.edu.do") && password.equals("strongpass")) {
             User user = new User();
 
             Intent intent = new Intent(this, ProfileActivity.class);
             intent.putExtra("user_data", user);
             startActivity(intent);
         }else {
-            Toast.makeText(this, "Email/Password cannot be empty or invalid", Toast.LENGTH_SHORT).show();
+            displayMessage();
         }
+    }
+
+    private void displayMessage(){
+        Toast message = Toast.makeText(this,
+                "Email/Password cannot be empty or invalid",
+                Toast.LENGTH_SHORT);
+        message.show();
     }
 }
