@@ -10,9 +10,6 @@ import android.widget.TextView;
 import com.example.carlosparra.exercise01.R;
 import com.example.carlosparra.exercise01.models.User;
 
-import java.util.Locale;
-
-
 public class ProfileActivity extends AppCompatActivity {
 
     TextView textViewName;
