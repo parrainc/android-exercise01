@@ -10,16 +10,29 @@ import android.widget.Toast;
 
 import com.example.carlosparra.exercise01.R;
 import com.example.carlosparra.exercise01.models.User;
+import com.example.carlosparra.exercise01.utils.SharedPreferencesUtil;
 
 public class LoginActivity extends AppCompatActivity {
+
+    public static final String EXTRA_USER_DATA = "user_data";
 
     AppCompatButton buttonLogin;
     private EditText editTextEmail;
     private EditText editTextPassword;
 
+    private SharedPreferencesUtil mSharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mSharedPreferences = new SharedPreferencesUtil(this);
+        if (mSharedPreferences.isLogedIn()) {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            intent.putExtra(EXTRA_USER_DATA, mSharedPreferences.getUserData());
+            startActivity(intent);
+            this.finish();
+        }
+
         setContentView(R.layout.activity_login);
 
         buttonLogin = findViewById(R.id.buttonLogIn);
@@ -29,10 +42,10 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String email = editTextEmail.getText().toString();
-                final String password = editTextPassword.getText().toString();
+            final String email = editTextEmail.getText().toString();
+            final String password = editTextPassword.getText().toString();
 
-                Login(email, password);
+            Login(email, password);
             }
         });
     }
@@ -42,7 +55,11 @@ public class LoginActivity extends AppCompatActivity {
             User user = new User();
 
             Intent intent = new Intent(this, ProfileActivity.class);
-            intent.putExtra("user_data", user);
+            intent.putExtra(EXTRA_USER_DATA, user);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+            mSharedPreferences.saveLogIn(true);
+
             startActivity(intent);
         }else {
             displayMessage();
@@ -50,9 +67,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void displayMessage(){
-        Toast message = Toast.makeText(this,
-                "Email/Password cannot be empty or invalid",
-                Toast.LENGTH_SHORT);
-        message.show();
+        Toast.makeText(this,"Email/Password cannot be empty or invalid",
+                Toast.LENGTH_SHORT).show();
     }
 }

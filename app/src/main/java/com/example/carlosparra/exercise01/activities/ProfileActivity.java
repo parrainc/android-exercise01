@@ -4,11 +4,17 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.carlosparra.exercise01.R;
 import com.example.carlosparra.exercise01.models.User;
+import com.example.carlosparra.exercise01.utils.SharedPreferencesUtil;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -20,11 +26,15 @@ public class ProfileActivity extends AppCompatActivity {
     AppCompatButton buttonShareProfile;
     User user;
 
+    SharedPreferencesUtil mSharedPreferenceUtil;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         setTitle(R.string.profile_title);
+
+        mSharedPreferenceUtil = new SharedPreferencesUtil(this);
 
         textViewName = findViewById(R.id.textViewName);
         textViewDescription = findViewById(R.id.textViewDescription);
@@ -34,7 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
         buttonShareProfile = findViewById(R.id.buttonShareProfile);
 
         if (getIntent() != null && getIntent().getExtras() != null) {
-            user = (User) getIntent().getSerializableExtra("user_data");
+            user = (User) getIntent().getSerializableExtra(LoginActivity.EXTRA_USER_DATA);
 
             if (user != null) {
                 textViewName.setText(user.name);
@@ -51,6 +61,24 @@ public class ProfileActivity extends AppCompatActivity {
                 shareProfile(user);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.profile_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_logout:
+                logOut();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 
     private void shareProfile(User user) {
@@ -71,5 +99,13 @@ public class ProfileActivity extends AppCompatActivity {
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(chooser);
         }
+    }
+
+    private void logOut() {
+        mSharedPreferenceUtil.clearAll();
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        this.finish();
     }
 }
